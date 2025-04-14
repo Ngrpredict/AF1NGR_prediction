@@ -1,6 +1,3 @@
-# Recreating the original full App.js after kernel reset
-
-app_js_code = """
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './firebase/AuthContext';
@@ -44,43 +41,64 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/free-predictions" element={<FreePredictions />} />
-              <Route path="/premium-predictions" element={
-                <PrivateRoute>
-                  <PremiumPredictions />
-                </PrivateRoute>
-              } />
-              <Route path="/admin" element={
-                <AdminRoute>
-                  <AdminDashboard />
-                </AdminRoute>
-              } />
-              <Route path="/user" element={
-                <PrivateRoute>
-                  <UserDashboard />
-                </PrivateRoute>
-              } />
-              <Route path="/payment" element={
-                <PrivateRoute>
-                  <PaymentPage />
-                </PrivateRoute>
-              } />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/crypto" element={
-                <PrivateRoute>
-                  <CryptoSection />
-                </PrivateRoute>
-              } />
-              <Route path="/add-prediction" element={
-                <AdminRoute>
-                  <PredictionForm />
-                </AdminRoute>
-              } />
-              <Route path="/predictions" element={
-                <PrivateRoute>
-                  <PredictionList type="premium" />
-                </PrivateRoute>
-              } />
+              <Route
+                path="/premium-predictions"
+                element={
+                  <PrivateRoute>
+                    <PremiumPredictions />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/payment"
+                element={
+                  <PrivateRoute>
+                    <PaymentPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/crypto"
+                element={
+                  <PrivateRoute>
+                    <CryptoSection />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/predictions"
+                element={
+                  <PrivateRoute>
+                    <PredictionList type="premium" />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/add-prediction"
+                element={
+                  <AdminRoute>
+                    <PredictionForm />
+                  </AdminRoute>
+                }
+              />
               <Route path="/pricing" element={<PricingPage />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <PrivateRoute>
+                    <UserDashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
@@ -92,11 +110,3 @@ function App() {
 }
 
 export default App;
-"""
-
-# Save to a new App.js file
-file_path = "/mnt/data/App.js"
-with open(file_path, "w") as f:
-    f.write(app_js_code)
-
-file_path
