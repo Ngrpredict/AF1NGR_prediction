@@ -1,7 +1,4 @@
-# Re-run the App.js regeneration after environment reset
 
-# Define the regenerated App.js content again
-app_js_regenerated = """
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './firebase/AuthContext';
@@ -79,11 +76,3 @@ function App() {
 }
 
 export default App;
-"""
-
-# Save the regenerated App.js file
-app_js_path = "/mnt/data/App.js"
-with open(app_js_path, "w") as f:
-    f.write(app_js_regenerated)
-
-app_js_path
