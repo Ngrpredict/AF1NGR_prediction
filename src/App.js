@@ -1,9 +1,6 @@
-# Recreate and save the updated App.js file after environment reset
+# Update App.js to include the PricingPage route
 
-import os
-
-# Define updated App.js content
-app_js_code = """
+app_js_code_with_pricing = """
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './firebase/AuthContext';
@@ -22,6 +19,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import PredictionForm from './components/PredictionForm';
 import PredictionList from './components/PredictionList';
+import PricingPage from './components/PricingPage';
 
 const PrivateRoute = ({ children }) => {
   const { currentUser } = useAuth();
@@ -64,6 +62,7 @@ function App() {
               <Route path="/payment" element={<PrivateRoute><PaymentPage /></PrivateRoute>} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/crypto" element={<PrivateRoute><CryptoSection /></PrivateRoute>} />
+              <Route path="/pricing" element={<PricingPage />} />
               <Route path="/add-prediction" element={<AdminRoute><PredictionForm /></AdminRoute>} />
               <Route path="/predictions" element={<PrivateRoute><PredictionList type="premium" /></PrivateRoute>} />
               <Route path="*" element={<NotFound />} />
@@ -79,13 +78,9 @@ function App() {
 export default App;
 """
 
-# Save location
-project_dir = "/mnt/data/NGR_Prediction_Final_Project/src"
-os.makedirs(project_dir, exist_ok=True)
-app_js_path = os.path.join(project_dir, "App.js")
+# Save the updated App.js file with PricingPage route
+updated_app_js_path = "/mnt/data/NGR_Prediction_Final_Project/src/App.js"
+with open(updated_app_js_path, "w") as f:
+    f.write(app_js_code_with_pricing)
 
-# Write file
-with open(app_js_path, "w") as f:
-    f.write(app_js_code)
-
-app_js_path
+updated_app_js_path
