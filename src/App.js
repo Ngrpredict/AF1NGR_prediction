@@ -1,6 +1,7 @@
-# Update App.js to include the UserDashboard route
+# Re-run the App.js regeneration after environment reset
 
-app_js_code_with_user_dashboard = """
+# Define the regenerated App.js content again
+app_js_regenerated = """
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './firebase/AuthContext';
@@ -80,9 +81,9 @@ function App() {
 export default App;
 """
 
-# Save the updated App.js file
-app_js_path = "/mnt/data/NGR_Prediction_Final_Project/src/App.js"
+# Save the regenerated App.js file
+app_js_path = "/mnt/data/App.js"
 with open(app_js_path, "w") as f:
-    f.write(app_js_code_with_user_dashboard)
+    f.write(app_js_regenerated)
 
 app_js_path
