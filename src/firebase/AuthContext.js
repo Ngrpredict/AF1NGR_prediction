@@ -1,56 +1,32 @@
-# Generate a full working firebase/AuthContext.js file for authentication context
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
 
-auth_context_code = """
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from './config';
-import { onAuthStateChanged } from 'firebase/auth';
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+};
 
-// Create the Auth context
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setCurrentUser(user);
-
-      // Simple admin check — replace this with real logic
-      if (user && user.email === 'admin@ngrprediction.com') {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
-      }
-
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
+    const unsub = onAuthStateChanged(auth, user => setCurrentUser(user));
+    return () => unsub();
   }, []);
 
-  const value = {
-    currentUser,
-    isAdmin
-  };
-
   return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
+    <AuthContext.Provider value={{ currentUser }}>
+      {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
-"""
-
-# Create and save the file
-auth_context_path = "/mnt/data/NGR_Prediction_Final_Project/src/firebase/AuthContext.js"
-os.makedirs(os.path.dirname(auth_context_path), exist_ok=True)
-with open(auth_context_path, "w") as f:
-    f.write(auth_context_code)
-
-auth_context_path
+export const useAuth = () => useContext(AuthContext);
